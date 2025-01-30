@@ -1,4 +1,3 @@
-import { deepseek } from '@ai-sdk/deepseek';
 import { fireworks } from '@ai-sdk/fireworks';
 import { streamText, smoothStream } from 'ai';
 
