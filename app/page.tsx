@@ -78,7 +78,7 @@ export default function Page() {
       const searchResponse = await fetch(getAssetPath('/api/exawebsearch'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           query: input,
           previousQueries: previousQueries.slice(-3)
         }),
@@ -94,9 +94,9 @@ export default function Page() {
       setIsLLMLoading(true);
 
       const searchContext = results.length > 0
-        ? `Web Search Results:\n\n${results.map((r: SearchResult, i: number) => 
-            `Source [${i + 1}]:\nTitle: ${r.title}\nURL: ${r.url}\n${r.author ? `Author: ${r.author}\n` : ''}${r.publishedDate ? `Date: ${r.publishedDate}\n` : ''}Content: ${r.text}\n---`
-          ).join('\n\n')}\n\nInstructions: Based on the above search results, please provide an answer to the user's query. When referencing information, cite the source number in brackets like [1], [2], etc. Use simple english. Use simple words.`
+        ? `Web Search Results:\n\n${results.map((r: SearchResult, i: number) =>
+          `Source [${i + 1}]:\nTitle: ${r.title}\nURL: ${r.url}\n${r.author ? `Author: ${r.author}\n` : ''}${r.publishedDate ? `Date: ${r.publishedDate}\n` : ''}Content: ${r.text}\n---`
+        ).join('\n\n')}\n\nInstructions: Based on the above search results, please provide an answer to the user's query. When referencing information, cite the source number in brackets like [1], [2], etc.Use simple english and simple words. Most important: Before coming to the final answer, think out loud, and think step by step. Think deeply, and review your steps, do 3-5 steps of thinking. Wrap the thinking in <think> tags. Start with <think> and end with </think> and then the final answer.`
         : '';
 
       if (searchContext) {
@@ -261,7 +261,7 @@ export default function Page() {
                   autoFocus
                   className={`flex-1 p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[var(--brand-default)] text-base`}
                 />
-                <button 
+                <button
                   type="submit"
                   disabled={!input.trim() || isSearching}
                   className="px-5 py-3 bg-[var(--brand-default)] text-white rounded-md hover:bg-[var(--brand-muted)] font-medium w-[120px]"
