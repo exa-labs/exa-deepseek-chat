@@ -51,6 +51,7 @@ export default function Page() {
   const [isThinkingExpanded, setIsThinkingExpanded] = useState(true);
   const [isSourcesExpanded, setIsSourcesExpanded] = useState(true);
   const [loadingDots, setLoadingDots] = useState('');
+  const [showModelNotice, setShowModelNotice] = useState(true);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -123,6 +124,8 @@ export default function Page() {
 
       const { results } = await searchResponse.json();
       setSearchResults(results);
+      // Hide the notice when search results appear
+      setShowModelNotice(false);
       setIsSearching(false);
       setIsLLMLoading(true);
 
@@ -130,7 +133,7 @@ export default function Page() {
       const searchContext = results.length > 0
         ? `Web Search Results:\n\n${results.map((r: SearchResult, i: number) => 
             `Source [${i + 1}]:\nTitle: ${r.title}\nURL: ${r.url}\n${r.author ? `Author: ${r.author}\n` : ''}${r.publishedDate ? `Date: ${r.publishedDate}\n` : ''}Content: ${r.text}\n---`
-          ).join('\n\n')}\n\nInstructions: Based on the above search results, please provide an answer to the user's query. When referencing information, cite the source number in brackets like [1], [2], etc. Use simple english. Use simple words.`
+          ).join('\n\n')}\n\nInstructions: Based on the above search results, please provide an answer to the user's query. When referencing information, cite the source number in brackets like [1], [2], etc. Use simple english and simple words. Most important: Before coming to the final answer, think out loud, and think step by step. Think deeply, and review your steps, do 3-5 steps of thinking. Wrap the thinking in <think> tags. Start with <think> and end with </think> and then the final answer.`
         : '';
 
       // Send both system context and user message in one request
@@ -175,12 +178,32 @@ export default function Page() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 lg:bg-transparent bg-white/80 backdrop-blur-sm lg:backdrop-blur-none border-b lg:border-b-0 z-50">
-        <div className="md:max-w-4xl mx-auto px-6 py-3 flex justify-end">
+      <div className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm border-b z-50">
+        <div className="md:max-w-4xl mx-auto px-6 py-3 flex justify-between items-center">
+          <a
+            href="https://dashboard.exa.ai"
+            target="_blank"
+            className="flex items-center gap-1.5 text-md text-gray-600 hover:text-[var(--brand-default)] transition-colors"
+          >
+            <span className="underline">try exa api</span>
+            <svg
+              className="w-3.5 h-3.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+              />
+            </svg>
+          </a>
           <a
             href="https://github.com/exa-labs/exa-deepseek-chat"
             target="_blank"
-            className="flex items-center gap-1.5 text-md text-gray-600 hover:text-[var(--brand-default)] transition-colors lg:absolute lg:right-6 lg:top-6"
+            className="flex items-center gap-1.5 text-md text-gray-600 hover:text-[var(--brand-default)] transition-colors"
           >
             <span className="underline">see project code here</span>
             <svg
@@ -296,8 +319,9 @@ export default function Page() {
                       {/* Content */}
                       <div className="space-y-2">
                         {searchResults.map((result, idx) => (
-                          <div key={idx} className="text-sm">
-                            <a href={result.url} target="_blank" 
+                          <div key={idx} className="text-sm group relative">
+                            <a href={result.url} 
+                               target="_blank" 
                                className="text-gray-600 hover:text-[var(--brand-default)] flex items-center gap-2">
                               [{idx + 1}] {result.title}
                               {result.favicon && (
@@ -308,6 +332,10 @@ export default function Page() {
                                 />
                               )}
                             </a>
+                            {/* URL tooltip */}
+                            <div className="opacity-0 group-hover:opacity-100 transition-opacity absolute left-0 -bottom-6 bg-gray-800 text-white text-xs py-1 px-2 rounded whitespace-nowrap z-10 pointer-events-none">
+                              {result.url}
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -343,6 +371,7 @@ export default function Page() {
         <div className={`${messages.filter(m => m.role !== 'system').length === 0 
           ? 'w-full max-w-2xl mx-auto px-6' 
           : 'w-full max-w-4xl mx-auto px-6 py-4'}`}>
+
           <form onSubmit={handleSubmit} className="flex justify-center">
             <div className={`flex gap-2 w-full max-w-4xl`}>
               <textarea
@@ -353,6 +382,16 @@ export default function Page() {
                 rows={1}
                 className={`flex-1 p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[var(--brand-default)] text-base resize-none overflow-hidden max-h-[200px] min-h-[48px]`}
                 style={{ lineHeight: '1.5' }}
+
+          <form onSubmit={handleSubmit} className="flex flex-col items-center">
+            <div className="flex gap-2 w-full max-w-4xl">
+              <input
+                value={input}
+                onChange={handleInputChange}
+                placeholder="Ask something..."
+                autoFocus
+                className={`flex-1 p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[var(--brand-default)] text-base`}
+
               />
               <button 
                 type="submit"
@@ -369,6 +408,13 @@ export default function Page() {
                 )}
               </button>
             </div>
+            
+            {/* Add the notice text */}
+            {showModelNotice && (
+              <p className="text-xs md:text-sm text-gray-600 mt-8">
+                Switched to DeepSeek V3 model from DeepSeek R1 due to high traffic
+              </p>
+            )}
           </form>
         </div>
       </div>
