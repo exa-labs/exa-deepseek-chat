@@ -47,6 +47,7 @@ export default function Page() {
   const [isThinkingExpanded, setIsThinkingExpanded] = useState(true);
   const [isSourcesExpanded, setIsSourcesExpanded] = useState(true);
   const [loadingDots, setLoadingDots] = useState('');
+  const [showModelNotice, setShowModelNotice] = useState(true);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -90,13 +91,14 @@ export default function Page() {
 
       const { results } = await searchResponse.json();
       setSearchResults(results);
+      setShowModelNotice(false);
       setIsSearching(false);
       setIsLLMLoading(true);
 
       const searchContext = results.length > 0
-        ? `Web Search Results:\n\n${results.map((r: SearchResult, i: number) => 
-            `Source [${i + 1}]:\nTitle: ${r.title}\nURL: ${r.url}\n${r.author ? `Author: ${r.author}\n` : ''}${r.publishedDate ? `Date: ${r.publishedDate}\n` : ''}Content: ${r.text}\n---`
-          ).join('\n\n')}\n\nInstructions: Based on the above search results, please provide an answer to the user's query. When referencing information, cite the source number in brackets like [1], [2], etc. Use simple english and simple words. Most important: Before coming to the final answer, think out loud, and think step by step. Think deeply, and review your steps, do 3-5 steps of thinking. Wrap the thinking in <think> tags. Start with <think> and end with </think> and then the final answer.`
+        ? `Web Search Results:\n\n${results.map((r: SearchResult, i: number) =>
+          `Source [${i + 1}]:\nTitle: ${r.title}\nURL: ${r.url}\n${r.author ? `Author: ${r.author}\n` : ''}${r.publishedDate ? `Date: ${r.publishedDate}\n` : ''}Content: ${r.text}\n---`
+        ).join('\n\n')}\n\nInstructions: Based on the above search results, please provide an answer to the user's query. When referencing information, cite the source number in brackets like [1], [2], etc. Use simple english and simple words. Most important: Before coming to the final answer, think out loud, and think step by step. Think deeply, and review your steps, do 3-5 steps of thinking. Wrap the thinking in <think> tags. Start with <think> and end with </think> and then the final answer.`
         : '';
 
       if (searchContext) {
@@ -252,8 +254,8 @@ export default function Page() {
         </div>
         <div className={`${messages.filter(m => m.role !== 'system').length === 0 ? 'fixed inset-0 flex items-center justify-center bg-transparent' : 'fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-sm border-t'} z-40 transition-all duration-300`}>
           <div className={`${messages.filter(m => m.role !== 'system').length === 0 ? 'w-full max-w-2xl mx-auto px-6' : 'w-full max-w-4xl mx-auto px-6 py-4'}`}>
-            <form onSubmit={handleSubmit} className="flex justify-center">
-              <div className={`flex gap-2 w-full max-w-4xl`}>
+            <form onSubmit={handleSubmit} className="flex flex-col items-center">
+              <div className="flex gap-2 w-full max-w-4fl">
                 <input
                   value={input}
                   onChange={handleInputChange}
@@ -276,6 +278,13 @@ export default function Page() {
                   )}
                 </button>
               </div>
+
+              {/* Add the notice text */}
+              {showModelNotice && (
+                <p className="text-xs md:text-sm text-gray-600 mt-8">
+                  Switched to DeepSeek V3 model from DeepSeek R1 due to high traffic
+                </p>
+              )}
             </form>
           </div>
         </div>
