@@ -71,6 +71,32 @@ export default function Page() {
     api: getAssetPath('/api/chat'),
   });
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    // Submit form on Enter key, but allow Shift+Enter for new lines
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault(); // Prevent default to avoid new line
+      const form = e.currentTarget.form;
+      if (form) form.requestSubmit();
+    }
+  };
+
+
+  const adjustTextareaHeight = (value: string) => {
+    const textarea = document.querySelector('textarea');
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  };
+
+
+
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    handleInputChange(e);
+    adjustTextareaHeight(e.target.value);
+  };
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
@@ -326,12 +352,24 @@ export default function Page() {
         )}
       </div>
 
-      <div className={`${messages.filter(m => m.role !== 'system').length === 0 
+        <div className={`${messages.filter(m => m.role !== 'system').length === 0 
         ? 'fixed inset-0 flex items-center justify-center bg-transparent' 
         : 'fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-sm border-t'} z-40 transition-all duration-300`}>
         <div className={`${messages.filter(m => m.role !== 'system').length === 0 
           ? 'w-full max-w-2xl mx-auto px-6' 
           : 'w-full max-w-4xl mx-auto px-6 py-4'}`}>
+
+          <form onSubmit={handleSubmit} className="flex justify-center">
+            <div className={`flex gap-2 w-full max-w-4xl`}>
+              <textarea
+                value={input}
+                onChange={handleTextareaChange}
+                onKeyDown={handleKeyDown}
+                placeholder="Ask something... (Shift + Enter for new line)"
+                rows={1}
+                className={`flex-1 p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[var(--brand-default)] text-base resize-none overflow-hidden max-h-[200px] min-h-[48px]`}
+                style={{ lineHeight: '1.5' }}
+
           <form onSubmit={handleSubmit} className="flex flex-col items-center">
             <div className="flex gap-2 w-full max-w-4xl">
               <input
@@ -340,11 +378,12 @@ export default function Page() {
                 placeholder="Ask something..."
                 autoFocus
                 className={`flex-1 p-3 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[var(--brand-default)] text-base`}
+
               />
               <button 
                 type="submit"
                 disabled={!input.trim() || isSearching}
-                className="px-5 py-3 bg-[var(--brand-default)] text-white rounded-md hover:bg-[var(--brand-muted)] font-medium w-[120px]"
+                className="px-5 py-3 bg-[var(--brand-default)] text-white rounded-md hover:bg-[var(--brand-muted)] font-medium w-[120px] h-[48px] flex-shrink-0"
               >
                 {isSearching ? (
                   <span className="inline-flex justify-center items-center">
