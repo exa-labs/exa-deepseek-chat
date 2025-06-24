@@ -1,80 +1,53 @@
-# 💬 Exa & Deepseek R1 Chat App
-### Powered by [Exa](https://exa.ai) - The Web Search API
+AI search engine freeseek.
+Uses exa api for grounding.
+OpenAds integration for ad support.
 
-### Try the tool: https://demo.exa.ai/deepseekchat
+## Tech Stack
 
-![Screenshot](https://exa-deepseek-chat.vercel.app/opengraph-image.jpg)
+- **Framework**: [Next.js](https://nextjs.org/) 14 (App Router)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **LLM**: [Deepseek](https://www.deepseek.com/) via [Fireworks.ai](https://fireworks.ai/)
+- **AI SDK**: [Vercel AI SDK](https://sdk.vercel.ai/)
+- **Web Search**: [Exa API](https://exa.ai/)
 
-<br>
+## Project Structure
 
-## 🎯 What is Exa & Deepseek Chat App?
+- `app/`: Main application directory.
+  - `page.tsx`: The main chat interface.
+  - `layout.tsx`: The root layout.
+  - `api/`: API routes.
+    - `chat/route.ts`: Handles chat requests to the LLM.
+    - `exawebsearch/route.ts`: Handles web search requests using the Exa API.
+- `public/`: Static assets.
+- `middleware.ts`: Handles redirects for custom domains.
+- `next.config.mjs`: Next.js configuration.
 
-Exa & Deepseek Chat App is a free and open-source chat app that uses Exa's API for web search and Deepseek R1 LLM for reasoning.
+## Key Functionality
 
-This app provides a cool and simple chat experience which you can clone and build upon.
+The application is a chat interface that uses web search to ground the LLM's responses. The flow is as follows:
 
-<br>
+1. User enters a query.
+2. The application calls the `/api/exawebsearch` endpoint to get relevant web pages from the Exa API.
+3. The search results are formatted into a context string.
+4. The context string and the original query are sent to the `/api/chat` endpoint.
+5. The backend streams the LLM's response back to the client, including a "thinking" process.
 
-## 💻 Tech Stack
-- **Search Engine**: [Exa API](https://exa.ai) - Web search API
-- **Language Model**: Deepseek R1 via Fireworks AI
-- **Frontend**: [Next.js](https://nextjs.org/docs) with App Router, [TailwindCSS](https://tailwindcss.com), TypeScript
-- **AI Integration**: [Vercel AI SDK](https://sdk.vercel.ai/docs/ai-sdk-core)
-- **Hosting**: [Vercel](https://vercel.com/)
+## Ads Integration
 
-<br>
+The application integrates with OpenAds via a `stratos` object.
 
-## 🚀 Getting Started
+- The ad is initialized in `app/page.tsx`.
+- CSS overrides for the ad are also in `app/page.tsx`.
+- The ad is called when the user submits a query.
 
-### Prerequisites
-- Node.js
-- Exa API key
-- Fireworks AI API key (For Deepseek R1)
+## Running Locally
 
-### Installation
+To run the application locally, you will need to:
 
-1. Clone the repository
-```bash
-git clone https://github.com/exa-labs/exa-deepseek-chat.git
-cd exa-deepseek-chat
-```
-
-2. Install dependencies
-```bash
-npm install
-```
-
-3. Set up environment variables (for Exa and Fireworks)
-
-4. Run the development server
-```bash
-npm run dev
-```
-
-5. Open http://localhost:3000/deepseekchat in your browser
-
-<br>
-
-## 🔑 API Keys & Environment Setup
-
-### Required API Keys
-* **Exa API Key**: Get from [Exa Dashboard](https://dashboard.exa.ai/api-keys)
-* **Deepseek API Key (From Fireworks AI)**: Get from your [Fireworks Dashboard](https://app.fireworks.ai/api-keys)
-
-<br>
-
-## ⭐ About [Exa](https://exa.ai)
-
-This project is powered by [Exa.ai](https://exa.ai), a web search API designed specifically for AI applications. Exa provides:
-
-* Quickly finds up-to-date information from the web
-* Improves the accuracy of answers by real-time web search
-* Uses high reasoning LLM to provide accurate answers
-
-[Try the New Exa Websets](https://exa.ai/websets)
-
-<br>
-
----
-
-Built with ❤️ by the Exa team
+1. Install the dependencies with `npm install`.
+2. Create a `.env.local` file and add your Exa API key:
+   ```
+   EXA_API_KEY=your_exa_api_key
+   ```
+3. Run the development server with `npm run dev`.

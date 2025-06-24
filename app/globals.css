@@ -4,11 +4,11 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 245, 247, 250;
+  --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 255, 255, 255;
 
   /* COLORS - Updated for utopian tech theme */
-  --brand-default: #0066cc;  /* Federation blue */
+  --brand-default: #000;  /* Federation blue */
   --brand-fainter: #f0f5fa;
   --brand-faint: #cce0f5;
   --brand-subtle: #3385d6;
@@ -68,11 +68,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-    135deg,
-    rgb(var(--background-start-rgb)),
-    rgb(var(--background-end-rgb))
-  );
+  background: white;
   font-family: var(--font-abcd-diatype), sans-serif;
 }
 
@@ -113,7 +109,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-family-serif);
   color: var(--brand-default);
-  font-weight: 700;
+  font-weight: 400;
 }
 
 /* Updated UI elements for futuristic feel */
@@ -142,50 +138,26 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Add new geometric design elements */
 .geometric-panel {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.8));
-  border: 1px solid rgba(0, 102, 204, 0.1);
-  border-left: 3px solid #0066cc;
-  box-shadow: 
-    0 4px 6px rgba(0, 102, 204, 0.05),
-    0 1px 3px rgba(0, 102, 204, 0.1);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
 .retro-input {
-  background: rgba(255, 255, 255, 0.9);
-  border: 2px solid rgba(0, 102, 204, 0.1);
-  box-shadow: 
-    inset 0 2px 4px rgba(0, 102, 204, 0.05),
-    0 1px 2px rgba(0, 102, 204, 0.05);
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 9999px;
+  width: 100%;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+.retro-input:focus {
+  border: 1px solid #9ca3af;
+  outline: none;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
 .retro-button {
-  background: linear-gradient(135deg, #0066cc, #0052a3);
-  border: 1px solid rgba(0, 102, 204, 0.2);
-  box-shadow: 
-    0 2px 4px rgba(0, 102, 204, 0.1),
-    0 4px 8px rgba(0, 102, 204, 0.05);
-  position: relative;
-  overflow: hidden;
-}
-
-.retro-button::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 200%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  transition: 0.5s;
-}
-
-.retro-button:hover::after {
-  left: 100%;
+  display: none;
 }
 
 .geometric-border {
@@ -219,21 +191,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Add these new styles */
-.dune-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('/dunebg.jpg');
-  background-color: #f5f7fa; /* Fallback color in case image fails to load */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-
 .overlay {
   position: fixed;
   top: 0;
@@ -248,19 +205,4 @@ h1, h2, h3, h4, h5, h6 {
 .content-wrapper {
   position: relative;
   z-index: 2;
-}
-
-.dune-bg-fallback {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('/dunebg.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out;
-  z-index: -10;
 }
