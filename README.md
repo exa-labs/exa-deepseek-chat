@@ -11,7 +11,7 @@
 
 Exa & Deepseek Chat App is a free and open-source chat app that uses Exa's API for web search and Deepseek R1 LLM for reasoning.
 
-This app provides a cool and simple chat experience which you can clone and build upon.
+This app provides a cool and simple chat experience that you can clone and build upon.
 
 <br>
 
@@ -67,7 +67,7 @@ npm run dev
 
 This project is powered by [Exa.ai](https://exa.ai), a web search API designed specifically for AI applications. Exa provides:
 
-* Quickly finds up-to-date information from the web
+* Finds up-to-date information from the web quickly
 * Improves the accuracy of answers by real-time web search
 * Uses high reasoning LLM to provide accurate answers
 
