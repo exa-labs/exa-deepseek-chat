@@ -83,7 +83,7 @@ export default function Page() {
 
     try {
       // First, get web search results
-      const searchResponse = await fetch(getAssetPath('/api/exawebsearch'), {
+      const searchResponse = await fetch(getAssetPath('/api/firecrawlsearch'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 

@@ -13,7 +13,6 @@
     "@ai-sdk/fireworks": "^0.1.6",
     "@vercel/analytics": "^1.4.1",
     "ai": "^4.1.10",
-    "exa-js": "^1.4.8",
     "next": "14.2.17",
     "react": "^18",
     "react-dom": "^18",

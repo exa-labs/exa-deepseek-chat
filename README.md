@@ -1,5 +1,5 @@
-# 💬 Exa & Deepseek R1 Chat App
-### Powered by [Exa](https://exa.ai) - The Web Search API
+# 💬 Firecrawl & Deepseek Chat App
+### Powered by [Firecrawl](https://firecrawl.dev) for web search
 
 ### Try the tool: https://demo.exa.ai/deepseekchat
 
@@ -7,16 +7,16 @@
 
 <br>
 
-## 🎯 What is Exa & Deepseek Chat App?
+## 🎯 What is Firecrawl & Deepseek Chat App?
 
-Exa & Deepseek Chat App is a free and open-source chat app that uses Exa's API for web search and Deepseek R1 LLM for reasoning.
+Firecrawl & Deepseek Chat App is a free and open-source chat app that uses Firecrawl search for web results and Deepseek via Fireworks for reasoning.
 
 This app provides a cool and simple chat experience which you can clone and build upon.
 
 <br>
 
 ## 💻 Tech Stack
-- **Search Engine**: [Exa API](https://exa.ai) - Web search API
+- **Search Engine**: [Firecrawl Search API](https://docs.firecrawl.dev/api-reference/endpoint/search)
 - **Language Model**: Deepseek R1 via Fireworks AI
 - **Frontend**: [Next.js](https://nextjs.org/docs) with App Router, [TailwindCSS](https://tailwindcss.com), TypeScript
 - **AI Integration**: [Vercel AI SDK](https://sdk.vercel.ai/docs/ai-sdk-core)
@@ -28,7 +28,7 @@ This app provides a cool and simple chat experience which you can clone and buil
 
 ### Prerequisites
 - Node.js
-- Exa API key
+- Firecrawl API key
 - Fireworks AI API key (For Deepseek R1)
 
 ### Installation
@@ -44,7 +44,7 @@ cd exa-deepseek-chat
 npm install
 ```
 
-3. Set up environment variables (for Exa and Fireworks)
+3. Set up environment variables (for Firecrawl and Fireworks)
 
 4. Run the development server
 ```bash
@@ -58,20 +58,18 @@ npm run dev
 ## 🔑 API Keys & Environment Setup
 
 ### Required API Keys
-* **Exa API Key**: Get from [Exa Dashboard](https://dashboard.exa.ai/api-keys)
+* **Firecrawl API Key**: Get from [Firecrawl](https://www.firecrawl.dev/)
 * **Deepseek API Key (From Fireworks AI)**: Get from your [Fireworks Dashboard](https://app.fireworks.ai/api-keys)
 
 <br>
 
-## ⭐ About [Exa](https://exa.ai)
+## ⭐ About [Firecrawl](https://firecrawl.dev)
 
-This project is powered by [Exa.ai](https://exa.ai), a web search API designed specifically for AI applications. Exa provides:
+This project is powered by [Firecrawl](https://firecrawl.dev), which combines search + scraping so responses can include fresh, source-grounded content.
 
-* Quickly finds up-to-date information from the web
-* Improves the accuracy of answers by real-time web search
-* Uses high reasoning LLM to provide accurate answers
-
-[Try the New Exa Websets](https://exa.ai/websets)
+* Finds up-to-date information from the web
+* Returns cleaned page content for better LLM grounding
+* Makes source-driven answers easier to validate
 
 <br>
 
