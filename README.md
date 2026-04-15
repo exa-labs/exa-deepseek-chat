@@ -1,5 +1,5 @@
 # 💬 Exa & Deepseek R1 Chat App
-### Powered by [Exa](https://exa.ai) - The Web Search API
+### Powered by [Exa](https://exa.ai) - The Fastest and Most Accurate Web Search API for AI
 
 ### Try the tool: https://demo.exa.ai/deepseekchat
 
