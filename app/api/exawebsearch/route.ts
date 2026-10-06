@@ -7,8 +7,10 @@ export const maxDuration = 60;
 const exa = new Exa(process.env.EXA_API_KEY as string);
 
 export async function POST(req: NextRequest) {
+  const clientIp = req.headers.get('x-forwarded-for') ?? req.headers.get('x-real-ip') ?? 'unknown';
   try {
     const { query, previousQueries = [] } = await req.json();
+    console.log(`[audit] ${new Date().toISOString()} exawebsearch request ip=${clientIp} query=${JSON.stringify(query)}`);
     if (!query) {
       return NextResponse.json({ error: 'Query is required' }, { status: 400 });
     }
